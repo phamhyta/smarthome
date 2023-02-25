@@ -1,5 +1,6 @@
 package com.iot.smarthome.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,7 +24,8 @@ public class SensorDataEntity {
     private String location;
     private Double temp;
     private Double humid;
-//    private LocalDateTime time;
+
+    private LocalDateTime time;
 
     @Column(name = "device_id")
     private Long deviceId;
