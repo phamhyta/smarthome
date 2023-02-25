@@ -67,10 +67,10 @@ public class MqttConfig {
                 if(topic.equals("myTopic")) {
                     System.out.println("This is the topic");
                 }
-//                SensorDataEntity sensorDataEntity = new Gson().fromJson(message.getPayload().toString(), SensorDataEntity.class);
+                SensorDataEntity sensorDataEntity = new Gson().fromJson(message.getPayload().toString(), SensorDataEntity.class);
                 System.out.println("======");
-//                System.out.println(sensorDataEntity.getTemp());
-//                System.out.println(sensorDataEntity.getHumid());
+                System.out.println(sensorDataEntity.getTemp());
+                System.out.println(sensorDataEntity.getHumid());
                 System.out.println("======");
                 System.out.println(message.getPayload());
             }

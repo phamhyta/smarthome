@@ -21,4 +21,7 @@ public class DeviceEntity {
 
     @Column(name = "room_id")
     private Long roomId;
+
+    @Column(name = "status")
+    private Boolean status;
 }
