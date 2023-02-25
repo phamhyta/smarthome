@@ -1,8 +1,11 @@
 package com.iot.smarthome.config;
 
 import com.google.gson.Gson;
+import com.iot.smarthome.dto.SensorDataDTO;
 import com.iot.smarthome.entity.SensorDataEntity;
+import com.iot.smarthome.service.SensorDataService;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.integration.annotation.ServiceActivator;
@@ -19,8 +22,13 @@ import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.MessageHandler;
 import org.springframework.messaging.MessagingException;
 
+import java.time.LocalDateTime;
+
 @Configuration
 public class MqttConfig {
+
+    @Autowired
+    private SensorDataService sensorDataService;
 
     @Bean
     public MqttPahoClientFactory mqttClientFactory() {
@@ -46,7 +54,7 @@ public class MqttConfig {
     @Bean
     public MessageProducer inbound() {
         MqttPahoMessageDrivenChannelAdapter adapter = new MqttPahoMessageDrivenChannelAdapter("clientId-A8E6QfKzNh",
-                mqttClientFactory(), "myTopic");
+                mqttClientFactory(), "iot");
 
         adapter.setCompletionTimeout(5000);
         adapter.setConverter(new DefaultPahoMessageConverter());
@@ -64,13 +72,18 @@ public class MqttConfig {
             @Override
             public void handleMessage(Message<?> message) throws MessagingException {
                 String topic = message.getHeaders().get(MqttHeaders.RECEIVED_TOPIC).toString();
-                if(topic.equals("myTopic")) {
+                if(topic.equals("iot")) {
                     System.out.println("This is the topic");
                 }
-                SensorDataEntity sensorDataEntity = new Gson().fromJson(message.getPayload().toString(), SensorDataEntity.class);
+                SensorDataDTO sensorDataDTO = new Gson().fromJson(message.getPayload().toString(), SensorDataDTO.class);
                 System.out.println("======");
+                SensorDataEntity sensorDataEntity = new SensorDataEntity();
+                sensorDataEntity.setHumid(sensorDataDTO.getHumid());
+                sensorDataEntity.setTemp(sensorDataDTO.getTemp());
                 System.out.println(sensorDataEntity.getTemp());
                 System.out.println(sensorDataEntity.getHumid());
+                sensorDataEntity.setTime(LocalDateTime.now());
+                sensorDataService.saveData(sensorDataEntity);
                 System.out.println("======");
                 System.out.println(message.getPayload());
             }
