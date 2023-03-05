@@ -40,4 +40,26 @@ public class UserController {
             throw new UnknowException("Unknown exception create user in home!");
         }
     }
+
+    @PutMapping("/")
+    public ServerResponse updateUser(@RequestBody UserEntity userEntity) {
+        try {
+            userService.updateUser(userEntity);
+            return ServerResponse.success("Cập nhật người dùng thành công!");
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            throw new UnknowException("Unknown exception update user!");
+        }
+    }
+
+    @DeleteMapping("/{userId}")
+    public ServerResponse deleteUser(@PathVariable Long userId) {
+        try {
+            userService.deleteUser(userId);
+            return ServerResponse.success("Xoa nguoi dung thanh cong!");
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            throw new UnknowException("Unknown exception delete user!");
+        }
+    }
 }

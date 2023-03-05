@@ -35,4 +35,17 @@ public class UserService {
         userHomeRepository.save(userHomeEntity);
         return createdUser;
     }
+
+    public void updateUser(UserEntity userEntity) {
+        UserEntity oldUser = userRepository.findById(userEntity.getId()).get();
+        oldUser.setFullname(userEntity.getFullname());
+        userRepository.save(oldUser);
+    }
+
+    public void deleteUser(Long userId) {
+        List<Long> userHomeIds = userHomeRepository.findByUserId(userId)
+                        .stream().map(e->e.getId()).collect(Collectors.toList());
+        userHomeRepository.deleteAllById(userHomeIds);
+        userRepository.deleteById(userId);
+    }
 }

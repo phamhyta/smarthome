@@ -2,6 +2,7 @@ package com.iot.smarthome.controller;
 
 import com.iot.smarthome.dto.ServerResponse;
 import com.iot.smarthome.entity.DeviceEntity;
+import com.iot.smarthome.entity.HomeEntity;
 import com.iot.smarthome.exception.UnknowException;
 import com.iot.smarthome.service.DeviceService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +48,28 @@ public class DeviceController {
         } catch (Exception exception) {
             exception.printStackTrace();
             throw new UnknowException("Unknown exception toggle status!");
+        }
+    }
+
+    @PutMapping("")
+    public ServerResponse updateDevice(@RequestBody DeviceEntity deviceEntity) {
+        try {
+            deviceService.updateDevice(deviceEntity);
+            return ServerResponse.success("Cập nhật device thành công!");
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            throw new UnknowException("Unknown exception update user!");
+        }
+    }
+
+    @DeleteMapping("/{deviceId}")
+    public ServerResponse deleteDevice(@PathVariable Long deviceId) {
+        try {
+            deviceService.deleteDevice(deviceId);
+            return ServerResponse.success("Xoa device thanh cong!");
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            throw new UnknowException("Unknown exception delete home!");
         }
     }
 }
