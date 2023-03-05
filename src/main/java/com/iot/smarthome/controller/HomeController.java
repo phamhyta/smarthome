@@ -2,8 +2,10 @@ package com.iot.smarthome.controller;
 
 import com.iot.smarthome.dto.ServerResponse;
 import com.iot.smarthome.entity.HomeEntity;
+import com.iot.smarthome.entity.UserEntity;
 import com.iot.smarthome.exception.UnknowException;
 import com.iot.smarthome.service.HomeService;
+import com.iot.smarthome.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,6 +38,28 @@ public class HomeController {
         } catch (Exception exception) {
             exception.printStackTrace();
             throw new UnknowException("Unknown exception!");
+        }
+    }
+
+    @PutMapping("/")
+    public ServerResponse updateHome(@RequestBody HomeEntity homeEntity) {
+        try {
+            homeService.updateHome(homeEntity);
+            return ServerResponse.success("Cập nhật người dùng thành công!");
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            throw new UnknowException("Unknown exception update user!");
+        }
+    }
+
+    @DeleteMapping("/{homeId}")
+    public ServerResponse deleteHome(@PathVariable Long homeId) {
+        try {
+            homeService.deleteHome(homeId);
+            return ServerResponse.success("Xoa nha thanh cong!");
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            throw new UnknowException("Unknown exception delete home!");
         }
     }
 }

@@ -2,6 +2,7 @@ package com.iot.smarthome.service;
 
 import com.iot.smarthome.config.MqttGateway;
 import com.iot.smarthome.entity.DeviceEntity;
+import com.iot.smarthome.entity.UserEntity;
 import com.iot.smarthome.repository.DeviceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,5 +40,15 @@ public class DeviceService {
             mqttGateway.senToMqtt("0", "myIOT");
         }
         deviceRepository.save(deviceEntity);
+    }
+
+    public void updateDevice(DeviceEntity deviceEntity) {
+        DeviceEntity oldDevice = deviceRepository.findById(deviceEntity.getId()).get();
+        oldDevice.setName(deviceEntity.getName());
+        deviceRepository.save(oldDevice);
+    }
+
+    public void deleteDevice(Long deviceId) {
+        deviceRepository.deleteById(deviceId);
     }
 }
