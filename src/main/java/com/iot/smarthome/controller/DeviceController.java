@@ -28,7 +28,7 @@ public class DeviceController {
         }
     }
 
-    @GetMapping("/")
+    @PostMapping("/")
     public ServerResponse createNewDevice(@RequestBody DeviceEntity deviceEntity) {
         try {
             DeviceEntity createdDevice = deviceService.createNewDevice(deviceEntity);
@@ -40,7 +40,7 @@ public class DeviceController {
     }
 
     @PutMapping("/")
-    public ServerResponse toggleStatus(@RequestParam Long deviceId) {
+    public ServerResponse toggleStatus(@RequestParam(required = false) Long deviceId) {
         try {
             deviceService.toggleStatus(deviceId);
             return ServerResponse.success("Cập nhật thành công!");

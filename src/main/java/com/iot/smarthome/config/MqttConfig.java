@@ -102,7 +102,7 @@ public class MqttConfig {
         //clientId is generated using a random number
         MqttPahoMessageHandler messageHandler = new MqttPahoMessageHandler("serverOut", mqttClientFactory());
         messageHandler.setAsync(true);
-        messageHandler.setDefaultTopic("myTopic");
+        messageHandler.setDefaultTopic("myIOT");
         messageHandler.setDefaultRetained(false);
         return messageHandler;
     }

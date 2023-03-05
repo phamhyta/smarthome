@@ -17,8 +17,8 @@ public class IOTController {
     @PostMapping("/light/{status}")
     public ServerResponse toogleLight(@PathVariable("status") int status) {
         try {
-            if(status == 0) mqttGateway.senToMqtt("0", "iot");
-            else mqttGateway.senToMqtt("1", "iot");
+            if(status == 0) mqttGateway.senToMqtt("0", "myIOT");
+            else mqttGateway.senToMqtt("1", "myIOT");
             return ServerResponse.success("Tat bat den!");
         } catch (Exception exception) {
             throw new UnknowException("Unknowexception IOT controller!");
