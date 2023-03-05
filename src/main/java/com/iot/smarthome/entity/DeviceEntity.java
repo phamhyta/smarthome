@@ -23,5 +23,5 @@ public class DeviceEntity {
     private Long roomId;
 
     @Column(name = "status")
-    private Boolean status;
+    private Boolean status = false;
 }

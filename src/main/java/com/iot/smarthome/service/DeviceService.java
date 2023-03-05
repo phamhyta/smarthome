@@ -18,12 +18,14 @@ public class DeviceService {
     private MqttGateway mqttGateway;
 
     public List<DeviceEntity> getListDevice(Long roomId) {
-        return deviceRepository.findByRoomId(roomId);
+        List<DeviceEntity> deviceEntities = deviceRepository.findByRoomId(roomId);
+
+        return deviceEntities;
     }
 
     public DeviceEntity createNewDevice(DeviceEntity deviceEntity) {
         DeviceEntity createdDevice = deviceRepository.save(deviceEntity);
-        mqttGateway.senToMqtt("Tat den", "myTopic");
+        mqttGateway.senToMqtt("0", "iot");
         return createdDevice;
     }
 
@@ -32,9 +34,9 @@ public class DeviceService {
         deviceEntity.setStatus(!deviceEntity.getStatus());
         Boolean status = deviceEntity.getStatus();
         if (status == true) {
-            mqttGateway.senToMqtt("Bat den", "myTopic");
+            mqttGateway.senToMqtt("1", "myIOT");
         } else {
-            mqttGateway.senToMqtt("Tat den", "myTopic");
+            mqttGateway.senToMqtt("0", "myIOT");
         }
         deviceRepository.save(deviceEntity);
     }
