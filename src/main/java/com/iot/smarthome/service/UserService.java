@@ -26,4 +26,13 @@ public class UserService {
         List<UserEntity> userEntities = userRepository.findByIdIn(userIds);
         return userEntities;
     }
+
+    public UserEntity createUserInHome(Long homeId, UserEntity userEntity) {
+        UserEntity createdUser = userRepository.save(userEntity);
+        UserHomeEntity userHomeEntity = new UserHomeEntity();
+        userHomeEntity.setUserId(createdUser.getId());
+        userHomeEntity.setHomeId(homeId);
+        userHomeRepository.save(userHomeEntity);
+        return createdUser;
+    }
 }

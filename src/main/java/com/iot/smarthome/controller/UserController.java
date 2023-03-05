@@ -28,4 +28,16 @@ public class UserController {
             throw new UnknowException("Unknow exception api user");
         }
     }
+
+    @PostMapping("/")
+    public ServerResponse createUserInHome(@RequestParam Long homeId,
+                                           @RequestBody UserEntity userEntity) {
+        try {
+            UserEntity createdUser = userService.createUserInHome(homeId, userEntity);
+            return ServerResponse.success("Thêm người thành công!", createdUser);
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            throw new UnknowException("Unknown exception create user in home!");
+        }
+    }
 }
