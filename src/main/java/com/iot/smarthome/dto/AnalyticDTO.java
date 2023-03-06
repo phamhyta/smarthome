@@ -16,5 +16,7 @@ public class AnalyticDTO {
 
     private Double currentTemp;
     private Double currentHumid;
+    private List<AverageDTO> averageData;
     private List<SensorDataEntity> sensorData;
+    private List<Object> average;
 }
