@@ -54,7 +54,7 @@ public class MqttConfig {
     @Bean
     public MessageProducer inbound() {
         MqttPahoMessageDrivenChannelAdapter adapter = new MqttPahoMessageDrivenChannelAdapter("clientId-A8E6QfKzNh",
-                mqttClientFactory(), "iot");
+                mqttClientFactory(), "iot-g5");
 
         adapter.setCompletionTimeout(5000);
         adapter.setConverter(new DefaultPahoMessageConverter());
@@ -72,7 +72,7 @@ public class MqttConfig {
             @Override
             public void handleMessage(Message<?> message) throws MessagingException {
                 String topic = message.getHeaders().get(MqttHeaders.RECEIVED_TOPIC).toString();
-                if(topic.equals("iot")) {
+                if(topic.equals("iot-g5")) {
                     System.out.println("This is the topic");
                 }
                 SensorDataDTO sensorDataDTO = new Gson().fromJson(message.getPayload().toString(), SensorDataDTO.class);
@@ -80,8 +80,12 @@ public class MqttConfig {
                 SensorDataEntity sensorDataEntity = new SensorDataEntity();
                 sensorDataEntity.setHumid(sensorDataDTO.getHumid());
                 sensorDataEntity.setTemp(sensorDataDTO.getTemp());
+                sensorDataEntity.setDeviceId(sensorDataDTO.getDeviceId());
+                sensorDataEntity.setLocation(sensorDataDTO.getLocation());
                 System.out.println(sensorDataEntity.getTemp());
                 System.out.println(sensorDataEntity.getHumid());
+                System.out.println(sensorDataEntity.getDeviceId());
+                System.out.println(sensorDataEntity.getLocation());
                 sensorDataEntity.setTime(LocalDateTime.now());
                 sensorDataService.saveData(sensorDataEntity);
                 System.out.println("======");
