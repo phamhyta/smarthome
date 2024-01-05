@@ -10,7 +10,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class SensorDataDTO {
-
     private Double humid;
     private Double temp;
+    private String location;
+    private Long deviceId;
 }

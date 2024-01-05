@@ -50,6 +50,7 @@ drop table if exists device;
 create table device (
 	id bigint primary key not null auto_increment,
     room_id bigint not null,
+    name varchar(255) null,
     status boolean
 );
 

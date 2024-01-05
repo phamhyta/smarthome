@@ -19,9 +19,10 @@ public interface SensorDataRepository extends JpaRepository<SensorDataEntity, Lo
             "ORDER BY id DESC limit 10", nativeQuery = true)
     List<SensorDataEntity> get10Latest();
 
-    @Query(value = "select time, HOUR(time), MINUTE(time), AVG(temp) as temp, AVG(humid) as humid \n" +
-            "from sensor_data\n" +
-            "GROUP BY DATE(time), HOUR(time), MINUTE(time)\n" +
-            "limit 30", nativeQuery = true)
+    @Query(value = "SELECT DATE(time) AS date, HOUR(time) AS hour, MINUTE(time) AS minute, AVG(temp) AS temp, AVG(humid) AS humid " +
+        "FROM sensor_data " +
+        "GROUP BY DATE(time), HOUR(time), MINUTE(time) " +
+        "ORDER BY date DESC, hour DESC, minute DESC " +
+        "LIMIT 30", nativeQuery = true)
     List<Object[]> getAverage();
 }
